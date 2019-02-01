@@ -1,3 +1,32 @@
+// bluebird promise library
+var bluebird = require('bluebird');
+
+// allow cross origin request (from angular frontend)
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'http://localhose:4200');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  next();
+});
+
+// mongoose support
+var mongoose = require('mongoose');
+mongoose
+  .connect('mongodb://127.0.0.1:27017/todoapp', { useMongoClient: true })
+  .then(() => {
+    console.log(
+      `Succesfully Connected to the Mongodb Database  at URL : mongodb://127.0.0.1:27017/todoapp`
+    );
+  })
+  .catch(() => {
+    console.log(
+      `Error Connecting to the Mongodb Database at URL : mongodb://127.0.0.1:27017/todoapp`
+    );
+  });
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
